@@ -1,5 +1,14 @@
+var removeFromFrontOfArray = function(array, numOfElements){
+  for ( i = 0; i < numOfElements; i++){
+    array.shift()
+  }
+
+  return array
+}
+
 var calculator = {
   equation: [],
+
 
   attachEventListeners: function(){
     $('.number').on('click', function(){
@@ -15,7 +24,7 @@ var calculator = {
     })
 
     $(document).on('keypress', function(event){
-      if (event.keyCode = 13){ console.log('call solve function') }
+      if (event.keyCode = 13){ calculator.solve() }
     })
   },
 
@@ -27,6 +36,47 @@ var calculator = {
     else {
       calculator.equation.push(keyPressed)
     }
+  },
+
+  solve: function(){
+    console.log('solve')
+
+    for (i = 0; i < calculator.equation.length; i++){
+      if (calculator.equation[i] === ' + '){
+        var num1 = parseInt(calculator.equation[i-1])
+        var num2 = parseInt(calculator.equation[i+1])
+        removeFromFrontOfArray(calculator.equation, 3)
+        calculator.equation.unshift(num1 + num2)
+      }
+
+      if (calculator.equation[i] === ' - '){
+        var num1 = parseInt(calculator.equation[i-1])
+        var num2 = parseInt(calculator.equation[i+1])
+        removeFromFrontOfArray(calculator.equation, 3)
+        calculator.equation.unshift(num1 - num2)
+      }
+
+      if (calculator.equation[i] === ' x '){
+        var num1 = parseInt(calculator.equation[i-1])
+        var num2 = parseInt(calculator.equation[i+1])
+        removeFromFrontOfArray(calculator.equation, 3)
+        calculator.equation.unshift(num1 * num2)
+      } 
+
+      if (calculator.equation[i] === ' / '){
+        var num1 = parseInt(calculator.equation[i-1])
+        var num2 = parseInt(calculator.equation[i+1])
+        removeFromFrontOfArray(calculator.equation, 3)
+        calculator.equation.unshift(num1 / num2)
+      }
+    }
+
+    if (calculator.equation.length != 1) {
+      calculator.solve()
+    }
+
+    console.log(calculator.equation)
+
   }
 
 }
