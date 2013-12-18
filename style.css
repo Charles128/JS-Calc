@@ -29,7 +29,7 @@ h1 {
 }
 
 #numbers-container {
-  height: 100%;
+  overflow: hidden;
 }
 
 .number {
@@ -42,8 +42,19 @@ h1 {
 }
 
 #equals {
+  width: 50%;
   float: left;
-  bottom: 0;
+  text-align: center;
+  padding-top: 1em;
+  border-top: 2px solid;  
+}
+
+#clear {
+  width: 50%;
+  float: left;
+  text-align: center;
+  padding-top: 1em;
+  border-top: 2px solid;  
 }
 
 
