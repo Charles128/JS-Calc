@@ -1,9 +1,13 @@
-var removeFromFrontOfArray = function(array, numOfElements){
-  for ( i = 0; i < numOfElements; i++){
-    array.shift()
+var removeFromArray = function(array, indices){
+  var newArray = []
+  
+  for ( i = 0; i < array.length; i++){
+    if (indices.indexOf(i) === -1){
+      newArray.push(array[i])
+    }
   }
 
-  return array
+  return newArray
 }
 
 var calculator = {
@@ -41,44 +45,52 @@ var calculator = {
   solve: function(){
     console.log('solve')
 
-    for (i = 0; i < calculator.equation.length; i++){
-      if (calculator.equation[i] === ' + '){
-        var num1 = parseInt(calculator.equation[i-1])
-        var num2 = parseInt(calculator.equation[i+1])
-        removeFromFrontOfArray(calculator.equation, 3)
-        calculator.equation.unshift(num1 + num2)
-      }
-
-      if (calculator.equation[i] === ' - '){
-        var num1 = parseInt(calculator.equation[i-1])
-        var num2 = parseInt(calculator.equation[i+1])
-        removeFromFrontOfArray(calculator.equation, 3)
-        calculator.equation.unshift(num1 - num2)
-      }
-
-      if (calculator.equation[i] === ' x '){
-        var num1 = parseInt(calculator.equation[i-1])
-        var num2 = parseInt(calculator.equation[i+1])
-        removeFromFrontOfArray(calculator.equation, 3)
-        calculator.equation.unshift(num1 * num2)
-      } 
-
-      if (calculator.equation[i] === ' / '){
-        var num1 = parseInt(calculator.equation[i-1])
-        var num2 = parseInt(calculator.equation[i+1])
-        removeFromFrontOfArray(calculator.equation, 3)
-        calculator.equation.unshift(num1 / num2)
+    if (calculator.equation.indexOf(' x ') > -1){
+      for (i = 0; i < calculator.equation.length; i++){
+        if (calculator.equation[i] === ' x '){
+          var num1 = parseInt(calculator.equation[i-1])
+          var num2 = parseInt(calculator.equation[i+1])
+          calculator.equation[i] = (num1 * num2)
+          calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+        }
       }
     }
 
-    if (calculator.equation.length != 1) {
-      calculator.solve()
+    if (calculator.equation.indexOf(' / ') > -1){
+      for (i = 0; i < calculator.equation.length; i++){
+        if (calculator.equation[i] === ' / '){
+          var num1 = parseInt(calculator.equation[i-1])
+          var num2 = parseInt(calculator.equation[i+1])
+          calculator.equation[i] = (num1 / num2)
+          calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+        }
+      }
     }
 
+    if (calculator.equation.indexOf(' + ') > -1){
+      for (i = 0; i < calculator.equation.length; i++){
+        if (calculator.equation[i] === ' + '){
+          var num1 = parseInt(calculator.equation[i-1])
+          var num2 = parseInt(calculator.equation[i+1])
+          calculator.equation[i] = (num1 + num2)
+          calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+        }
+      }
+    }
+
+    if (calculator.equation.indexOf(' - ') > -1){
+      for (i = 0; i < calculator.equation.length; i++){
+        if (calculator.equation[i] === ' - '){
+          var num1 = parseInt(calculator.equation[i-1])
+          var num2 = parseInt(calculator.equation[i+1])
+          calculator.equation[i] = (num1 - num2)
+          calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+        }
+      }
+    } 
+      
     console.log(calculator.equation)
-
   }
-
 }
 
 window.onload = function(){
