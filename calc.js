@@ -13,18 +13,23 @@ var removeFromArray = function(array, indices){
 var calculator = {
   equation: [],
 
-
   attachEventListeners: function(){
     $('.number').on('click', function(){
       $('#calc-display').append(this.innerHTML)
       calculator.createEquationFromInput(this.innerHTML)
-      console.log(calculator.equation)
     })
 
     $('#operands').on('click', 'div', function(){
       $('#calc-display').append(this.innerHTML)
       calculator.createEquationFromInput(this.innerHTML)
-      console.log(calculator.equation)
+    })
+
+    $('#equals').on('click', function(){
+      calculator.solve()
+    })
+
+    $('#clear').on('click', function(){
+      calculator.resetCalc()
     })
 
     $(document).on('keypress', function(event){
@@ -43,7 +48,6 @@ var calculator = {
   },
 
   solve: function(){
-    console.log('solve')
 
     if (calculator.equation.indexOf(' x ') > -1){
       for (i = 0; i < calculator.equation.length; i++){
@@ -89,7 +93,12 @@ var calculator = {
       }
     } 
       
-    console.log(calculator.equation)
+    $('#calc-display').html(calculator.equation[0])
+  },
+
+  resetCalc: function(){
+    $('#calc-display').empty()
+    calculator.equation = []
   }
 }
 
