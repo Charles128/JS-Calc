@@ -25,7 +25,7 @@ var calculator = {
     })
 
     $('#equals').on('click', function(){
-      calculator.solve()
+      calculator.evaluate()
     })
 
     $('#clear').on('click', function(){
@@ -33,7 +33,7 @@ var calculator = {
     })
 
     $(document).on('keypress', function(event){
-      if (event.keyCode = 13){ calculator.solve() }
+      if (event.keyCode = 13){ calculator.evaluate() }
     })
   },
 
@@ -47,8 +47,8 @@ var calculator = {
     }
   },
 
-  solve: function(){
-
+  evaluate: function(){
+  
     if (calculator.equation.indexOf(' x ') > -1){
       for (i = 0; i < calculator.equation.length; i++){
         if (calculator.equation[i] === ' x '){
@@ -56,6 +56,10 @@ var calculator = {
           var num2 = parseInt(calculator.equation[i+1])
           calculator.equation[i] = (num1 * num2)
           calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+
+          if (calculator.equation.length != 1){
+            calculator.evaluate()
+          }
         }
       }
     }
@@ -67,6 +71,10 @@ var calculator = {
           var num2 = parseInt(calculator.equation[i+1])
           calculator.equation[i] = (num1 / num2)
           calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+
+          if (calculator.equation.length != 1){
+            calculator.evaluate()
+          }
         }
       }
     }
@@ -78,6 +86,10 @@ var calculator = {
           var num2 = parseInt(calculator.equation[i+1])
           calculator.equation[i] = (num1 + num2)
           calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+          
+          if (calculator.equation.length != 1){
+            calculator.evaluate()
+          }
         }
       }
     }
@@ -89,6 +101,10 @@ var calculator = {
           var num2 = parseInt(calculator.equation[i+1])
           calculator.equation[i] = (num1 - num2)
           calculator.equation = removeFromArray(calculator.equation, [i-1,i+1])
+
+          if (calculator.equation.length != 1){
+            calculator.evaluate()
+          }
         }
       }
     } 
